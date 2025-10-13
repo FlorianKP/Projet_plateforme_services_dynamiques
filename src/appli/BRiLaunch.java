@@ -5,12 +5,11 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.Scanner;
 
-import bri.ServeurBRi;
-import bri.Service;
-import bri.ServiceRegistry;
+import bri.*;
 
 public class BRiLaunch {
-	private final static int PORT_SERVICE = 3000;
+	private final static int PORT_PROG = 3000;
+	private final static int PORT_AMA = 4000;
 	
 	public static void main(String[] args) {
 		@SuppressWarnings("resource")
@@ -31,7 +30,8 @@ public class BRiLaunch {
 		System.out.println("A tout instant, en tapant le nom de la classe, vous pouvez l'int�grer");
 		System.out.println("Les clients se connectent au serveur 3000 pour lancer une activit�");
 		
-		new Thread(new ServeurBRi(PORT_SERVICE)).start() ;
+		new Thread(new ServeurBRi(PORT_PROG, ServiceProg.class)).start() ;
+		new Thread(new ServeurBRi(PORT_AMA, ServiceBRi.class)).start() ;
 		
 		while (true){
 				try {

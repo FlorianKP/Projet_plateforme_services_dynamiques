@@ -7,16 +7,16 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 /*
- * Ce client se connecte à un serveur dont le protocole est 
- * menu-choix-question-réponse client-réponse service
- * il n'y a qu'un échange (pas de boucle)
- * la réponse est saisie au clavier en String
+ * Ce client se connecte ï¿½ un serveur dont le protocole est 
+ * menu-choix-question-rï¿½ponse client-rï¿½ponse service
+ * il n'y a qu'un ï¿½change (pas de boucle)
+ * la rï¿½ponse est saisie au clavier en String
  * 
- * Le protocole d'échange est suffisant pour le tp4 avec ServiceInversion 
- * ainsi que tout service qui pose une question, traite la donnée du client et envoie sa réponse 
- * mais est bien sur susceptible de (nombreuses) améliorations
+ * Le protocole d'ï¿½change est suffisant pour le tp4 avec ServiceInversion 
+ * ainsi que tout service qui pose une question, traite la donnï¿½e du client et envoie sa rï¿½ponse 
+ * mais est bien sur susceptible de (nombreuses) amï¿½liorations
  */
-class Application {
+class ClientAMA {
 		private final static int PORT_SERVICE = 3000;
 		private final static String HOST = "localhost"; 
 	
@@ -29,7 +29,7 @@ class Application {
 			PrintWriter sout = new PrintWriter (s.getOutputStream ( ), true);
 			BufferedReader clavier = new BufferedReader(new InputStreamReader(System.in));			
 		
-			System.out.println("Connecté au serveur " + s.getInetAddress() + ":"+ s.getPort());
+			System.out.println("ConnectÃ© au serveur " + s.getInetAddress() + ":"+ s.getPort());
 			
 			String line;
 		// menu et choix du service
@@ -38,11 +38,11 @@ class Application {
 		// saisie/envoie du choix
 			sout.println(clavier.readLine());
 			
-		// réception/affichage de la question
+		// rï¿½ception/affichage de la question
 			System.out.println(sin.readLine());
-		// saisie clavier/envoie au service de la réponse
+		// saisie clavier/envoie au service de la rï¿½ponse
 			sout.println(clavier.readLine());
-		// réception/affichage de la réponse
+		// rï¿½ception/affichage de la rï¿½ponse
 			System.out.println(sin.readLine());
 				
 			

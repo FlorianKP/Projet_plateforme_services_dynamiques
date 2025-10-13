@@ -6,7 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 
 
-class ServiceBRi implements Runnable {
+public class ServiceBRi implements Service {
 	
 	private Socket client;
 	

@@ -2,16 +2,19 @@ package bri;
 
 
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.*;
 
 
 public class ServeurBRi implements Runnable {
 	private ServerSocket listen_socket;
+	private Class<? extends Service> service_class;
 	
 	// Cree un serveur TCP - objet de la classe ServerSocket
-	public ServeurBRi(int port) {
+	public ServeurBRi(int port, Class<? extends Service> classeService) {
 		try {
 			listen_socket = new ServerSocket(port);
+			service_class = classeService;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -23,11 +26,13 @@ public class ServeurBRi implements Runnable {
 	public void run() {
 		try {
 			while(true)
-				new ServiceBRi(listen_socket.accept()).start();
+				new Thread(service_class.getConstructor(Socket.class).newInstance(listen_socket.accept())).start();
 		}
 		catch (IOException e) { 
 			try {this.listen_socket.close();} catch (IOException e1) {}
-			System.err.println("Pb sur le port d'écoute :"+e);
+			System.err.println("Pb sur le port d'Ã©coute :"+e);
+		} catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e){
+			System.err.println("Erreur lors de l'instanciation du service :"+e);
 		}
 	}
 

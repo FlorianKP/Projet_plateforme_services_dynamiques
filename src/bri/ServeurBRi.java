@@ -18,7 +18,7 @@ public class ServeurBRi implements Runnable {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
-	}
+}
 
 	// Le serveur ecoute et accepte les connections.
 	// pour chaque connection, il cree un ServiceInversion, 

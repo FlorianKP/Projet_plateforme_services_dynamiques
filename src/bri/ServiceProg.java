@@ -19,10 +19,10 @@ import java.util.Map;
 
 public class ServiceProg implements Service {
     private static List<Programmeur> programmeurs = new ArrayList<Programmeur>();
-    //private static List<Method> fonctionnalites = new ArrayList<>(){};
+
     private Socket client;
 
-    private String reponse = "";
+    private String messageClient = "";
 
     private static class Commande {
         final String description;
@@ -63,15 +63,25 @@ public class ServiceProg implements Service {
                     traiterChoix(choix, in, out, programmeur);
             }
 
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        } catch (IOException e) {}
+
+        System.out.println("*********Connexion au service programmeur terminée");
+        try {client.close();} catch (IOException e2) {}
 
     }
 
+    private String lireLigne(BufferedReader in, PrintWriter out) throws IOException {
+        String input = in.readLine();
+        if (input == null || input.equalsIgnoreCase("exit")) {
+            throw new IOException("Client déconnecté");
+        }
+        return input;
+    }
+
+
     private int demanderChoix(BufferedReader in, PrintWriter out) throws IOException {
         StringBuilder sBuilder = new StringBuilder();
-        sBuilder.append(reponse);
+        sBuilder.append(messageClient);
         sBuilder.append("Tapez le numéro de la fonctionnalité désirée :");
         for (Map.Entry<Integer, Commande> entry : commandes.entrySet()) {
             int num = entry.getKey();
@@ -80,9 +90,9 @@ public class ServiceProg implements Service {
         }
         out.println(sBuilder.toString());
         try {
-            return Integer.parseInt(in.readLine());
+            return Integer.parseInt(lireLigne(in, out));
         } catch (NumberFormatException e) {
-            reponse = "Choix invalide. Opération annulée##";
+            messageClient = "Choix invalide. Opération annulée##";
             return -1;
         }
     }
@@ -93,97 +103,95 @@ public class ServiceProg implements Service {
         if (method != null) {
             try {
                 method.invoke(this, in, out, programmeur);
-            } catch (InvocationTargetException e) {
+            } catch (InvocationTargetException | NullPointerException e) {
                 throw new RuntimeException(e);
             } catch (IllegalAccessException e) {
-                reponse = "Le service demandée n'est pas accessible##";
-            } catch (NullPointerException e) {
-                reponse = "";
+                messageClient = "Le service demandée n'est pas accessible##";
             }
         } else {
-            reponse = "Option inconnue##";
+            messageClient = "Option inconnue##";
         }
     }
 
     private void ajouterService(BufferedReader in , PrintWriter out, Programmeur programmeur) throws IOException {
         out.println("Entrez le nom du service à ajouter");
-        String nomClasseService = in.readLine();
+        String nomClasseService = lireLigne(in, out);
         try {
             ServiceRegistry.addService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
-            reponse =  "Service ajouté " + nomClasseService + "##";
+            messageClient =  "Service ajouté " + nomClasseService + "##";
         } catch (ClassNotFoundException e) {
-            reponse = "Le service demandé est introuvable sur votre serveur FTP##";
+            messageClient = "Le service demandé est introuvable sur votre serveur FTP##";
         } catch (MalformedURLException e) {
-            reponse = "L'adresse FTP fournie est invalide##";
+            messageClient = "L'adresse FTP fournie est invalide##";
         }
     }
 
     private void mettreAJourService(BufferedReader in , PrintWriter out, Programmeur programmeur ) throws IOException {
         out.println("Entrez le nom du service à modifier");
-        String nomClasseService = in.readLine();
+        String nomClasseService = lireLigne(in, out);
         try {
             ServiceRegistry.updateService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
-            reponse = "Service modifié " + nomClasseService + "##";
+            messageClient = "Service modifié " + nomClasseService + "##";
         } catch (ClassNotFoundException e) {
-            reponse = "Le service demandé est introuvable sur votre serveur FTP##";
+            messageClient = "Le service demandé est introuvable sur votre serveur FTP##";
         } catch (MalformedURLException e) {
-            reponse = "L'adresse FTP fournie est invalide##";
+            messageClient = "L'adresse FTP fournie est invalide##";
         }
     }
 
     private void modifierAdresseFTP(BufferedReader in , PrintWriter out, Programmeur programmeur) throws IOException {
         out.println("Entrez la nouvelle adresse de votre serveur ftp");
-        String newAdresseFtp = in.readLine();
+        String newAdresseFtp = lireLigne(in, out);
         programmeur.setAdresseFtp(newAdresseFtp);
-        reponse = "Adresse modifiée, nouvelle adresse : " + newAdresseFtp + "##";
+        messageClient = "Adresse modifiée, nouvelle adresse : " + newAdresseFtp + "##";
     }
 
     public Programmeur authentifierProgrammeur(BufferedReader in, PrintWriter out) {
-        out.println(reponse + "Entrez 1 pour vous inscrire ou 2 pour vous connecter :##" +
+        out.println(messageClient + "Entrez 1 pour vous inscrire ou 2 pour vous connecter :##" +
                 "1- S'inscrire##" +
                 "2- Se connecter");
 
         try {
-            int choix = Integer.parseInt(in.readLine());
+            int choix = Integer.parseInt(lireLigne(in, out));
             if (choix == 1)
                 return inscrireProgrammeur(in, out);
             else if (choix == 2)
                 return connecterProgrammeur(in, out);
             else
-                reponse = "numéro de choix invalide##";
+                messageClient = "numéro de choix invalide##";
         } catch (NumberFormatException | IOException e) {
-            reponse = "numéro de choix invalide##";
+            messageClient = "numéro de choix invalide##";
         }
         return null;
     }
 
     public Programmeur inscrireProgrammeur(BufferedReader in , PrintWriter out) throws IOException {
         out.println("Entrez votre identifiant");
-        String identifiant = in.readLine();
+        String identifiant = lireLigne(in, out);
         if (programmeurExist(identifiant)) {
-            reponse = "Identifiant déjà utilisé##";
+            messageClient = "Identifiant déjà utilisé##";
             return null;
         }
         out.println("Choisissez un mot de passe: ");
-        String mdp = in.readLine();
+        String mdp = lireLigne(in, out);
         out.println("Entrez l'adresse de votre serveur ftp");
-        String adresseServeur = in.readLine();
-        reponse = "Inscription réussie##";
+        String adresseServeur = lireLigne(in, out);
+        messageClient = "Inscription réussie##";
         return addProgrammeur(identifiant, mdp, adresseServeur);
     }
 
     public Programmeur connecterProgrammeur(BufferedReader in , PrintWriter out) throws IOException {
         out.println("Entrez votre identifiant");
-        String identifiant = in.readLine();
+        String identifiant = lireLigne(in, out);
         out.println("Entrez votre mot de passe");
-        String mdp = in.readLine();
+        String mdp = lireLigne(in, out);
         for (Programmeur p : programmeurs) {
             if (p.verifier(identifiant, mdp)) {
-                reponse = "Connexion réussie##";
+                messageClient = "Connexion réussie##";
                 return p;
             }
         }
-        reponse = "Identifiant ou mot de passe incorrect##";
+        messageClient = "Identifiant ou mot de passe incorrect##";
         return null;
     }
 
@@ -204,5 +212,9 @@ public class ServiceProg implements Service {
         URLClassLoader urlcl = null;
         urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
         return urlcl;
+    }
+
+    protected void finalize() throws Throwable {
+        client.close();
     }
 }

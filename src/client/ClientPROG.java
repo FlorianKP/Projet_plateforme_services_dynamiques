@@ -37,7 +37,8 @@ class ClientPROG {
 
 				String reponse = clavier.readLine();
 
-				if (reponse == "exit") break;
+				if (reponse.equals("exit"))
+					throw new IOException();
 
 				sout.println(reponse);
 			}

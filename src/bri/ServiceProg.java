@@ -1,5 +1,6 @@
 package bri;
 
+import exceptions.BRiException;
 import programmeurs.Programmeur;
 
 import java.io.BufferedReader;
@@ -117,12 +118,14 @@ public class ServiceProg implements Service {
         out.println("Entrez le nom du service à ajouter");
         String nomClasseService = lireLigne(in, out);
         try {
-            ServiceRegistry.addService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
+            ServiceRegistry.addService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class), programmeur.getIdentifiant());
             messageClient =  "Service ajouté " + nomClasseService + "##";
         } catch (ClassNotFoundException e) {
             messageClient = "Le service demandé est introuvable sur votre serveur FTP##";
         } catch (MalformedURLException e) {
             messageClient = "L'adresse FTP fournie est invalide##";
+        } catch (BRiException e){
+            messageClient = e.getMessage() + "##";
         }
     }
 
@@ -130,12 +133,14 @@ public class ServiceProg implements Service {
         out.println("Entrez le nom du service à modifier");
         String nomClasseService = lireLigne(in, out);
         try {
-            ServiceRegistry.updateService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
+            ServiceRegistry.updateService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class), programmeur.getIdentifiant());
             messageClient = "Service modifié " + nomClasseService + "##";
         } catch (ClassNotFoundException e) {
             messageClient = "Le service demandé est introuvable sur votre serveur FTP##";
         } catch (MalformedURLException e) {
             messageClient = "L'adresse FTP fournie est invalide##";
+        } catch (BRiException e){
+            messageClient = e.getMessage();
         }
     }
 

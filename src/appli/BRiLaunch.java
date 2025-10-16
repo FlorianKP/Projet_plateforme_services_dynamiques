@@ -12,6 +12,7 @@ public class BRiLaunch {
 	private final static int PORT_AMA = 4000;
 	
 	public static void main(String[] args) {
+		/*
 		@SuppressWarnings("resource")
 		Scanner clavier = new Scanner(System.in);
 		
@@ -23,7 +24,7 @@ public class BRiLaunch {
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		
 		System.out.println("Bienvenue dans votre gestionnaire dynamique d'activit� BRi");
 		System.out.println("Pour ajouter une activit�, celle-ci doit �tre pr�sente sur votre serveur ftp");
@@ -32,14 +33,14 @@ public class BRiLaunch {
 		
 		new Thread(new ServeurBRi(PORT_PROG, ServiceProg.class)).start() ;
 		new Thread(new ServeurBRi(PORT_AMA, ServiceBRi.class)).start() ;
-		
+		/*
 		while (true){
 				try {
 					String classeName = clavier.next();
 					ServiceRegistry.addService(urlcl.loadClass(classeName).asSubclass(Service.class));
-				} catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-        }
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+			}		*/
 	}
 }

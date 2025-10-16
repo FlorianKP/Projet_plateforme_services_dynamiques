@@ -31,13 +31,15 @@ class ClientPROG {
 		
 			System.out.println("Connecté au serveur " + s.getInetAddress() + ":"+ s.getPort());
 
-			while (true) {
-				String line;
-				// menu et choix du service
-				line = sin.readLine();
+			String line;
+			while ((line = sin.readLine()) != null) {
 				System.out.println(line.replaceAll("##", "\n"));
-				// saisie/envoie du choix
-				sout.println(clavier.readLine());
+
+				String reponse = clavier.readLine();
+
+				if (reponse == "exit") break;
+
+				sout.println(reponse);
 			}
 
 				

@@ -37,9 +37,9 @@ public class BRiLaunch {
 				try {
 					String classeName = clavier.next();
 					ServiceRegistry.addService(urlcl.loadClass(classeName).asSubclass(Service.class));
-				} catch (Exception e) {
-					System.out.println(e);
-				}
-			}		
+				} catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+        }
 	}
 }

@@ -23,4 +23,8 @@ public class Programmeur {
     public boolean verifier(String identifiant, String mdp){
         return this.identifiant.equals(identifiant) && this.mdp.equals(mdp);
     }
+
+    public String getIdentifiant() {
+        return identifiant;
+    }
 }

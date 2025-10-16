@@ -39,10 +39,10 @@ public class ServiceProg implements Service {
 
             Programmeur programmeur = addProgrammeur(identifiant, mdp, adresseServeur);
 
-            out.println("Tapez le numéro de la fonctionnalité désirée\n" +
-                    "1 - Fournir un nouveau service\n" +
-                    "2 - Mettre à jour un service\n" +
-                    "3 - Déclarer un changement de l'adresse de votre serveur ftp\n");
+            out.println("Tapez le numéro de la fonctionnalité désirée##" +
+                    "1 - Fournir un nouveau service##" +
+                    "2 - Mettre à jour un service##" +
+                    "3 - Déclarer un changement de l'adresse de votre serveur ftp##");
             int choix = Integer.parseInt(in.readLine());
             if(choix == 1) {
                 addNewService(in, out, programmeur);
@@ -65,28 +65,14 @@ public class ServiceProg implements Service {
     private void addNewService(BufferedReader in , PrintWriter out, Programmeur programmeur ) throws IOException, ClassNotFoundException {
         out.println("Entrez le nom du service à ajouter");
         String nomClasseService = in.readLine();
-        URLClassLoader urlcl = null;
-        try {
-            urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        ServiceRegistry.addService(urlcl.loadClass(nomClasseService).asSubclass(Service.class));
+        ServiceRegistry.addService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
         out.println("Service ajouté " + nomClasseService);
     }
 
     private void updateService(BufferedReader in , PrintWriter out, Programmeur programmeur ) throws IOException, ClassNotFoundException {
         out.println("Entrez le nom du service à modifier");
         String nomClasseService = in.readLine();
-        URLClassLoader urlcl = null;
-        try {
-            urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
-        } catch (MalformedURLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        ServiceRegistry.updateService(urlcl.loadClass(nomClasseService).asSubclass(Service.class));
+        ServiceRegistry.updateService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class));
         out.println("Service modifié " + nomClasseService);
     }
 
@@ -105,5 +91,16 @@ public class ServiceProg implements Service {
         Programmeur p = new Programmeur(identifiant, mdp, adresseServeur);
         programmeurs.add(p);
         return p;
+    }
+
+    public URLClassLoader getURLClassLoader(Programmeur programmeur) {
+        URLClassLoader urlcl = null;
+        try {
+            urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return urlcl;
     }
 }

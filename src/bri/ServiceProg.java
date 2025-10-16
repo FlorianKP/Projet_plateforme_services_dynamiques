@@ -19,7 +19,7 @@ public class ServiceProg implements Service {
     //private static List<Method> fonctionnalites = new ArrayList<>(){};
     private Socket client;
 
-    ServiceProg(Socket socket) {
+    public ServiceProg(Socket socket) {
         client = socket;
     }
     @Override

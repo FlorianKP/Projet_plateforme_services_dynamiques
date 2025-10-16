@@ -17,11 +17,11 @@ import java.net.Socket;
  * mais est bien sur susceptible de (nombreuses) am�liorations
  */
 class ClientAMA {
-		private final static int PORT_SERVICE = 3000;
+		private final static int PORT_SERVICE = 4000;
 		private final static String HOST = "localhost"; 
 	
 	public static void main(String[] args) {
-		Socket s = null;		
+		Socket s = null;
 		try {
 			s = new Socket(HOST, PORT_SERVICE);
 

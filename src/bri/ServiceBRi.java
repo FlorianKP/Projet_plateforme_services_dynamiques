@@ -10,7 +10,7 @@ public class ServiceBRi implements Service {
 	
 	private Socket client;
 	
-	ServiceBRi(Socket socket) {
+	public ServiceBRi(Socket socket) {
 		client = socket;
 	}
 

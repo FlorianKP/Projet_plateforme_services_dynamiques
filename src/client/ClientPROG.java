@@ -17,7 +17,7 @@ import java.net.Socket;
  * mais est bien sur susceptible de (nombreuses) am�liorations
  */
 class ClientPROG {
-		private final static int PORT_SERVICE = 4000;
+		private final static int PORT_SERVICE = 3000;
 		private final static String HOST = "localhost"; 
 	
 	public static void main(String[] args) {
@@ -30,20 +30,16 @@ class ClientPROG {
 			BufferedReader clavier = new BufferedReader(new InputStreamReader(System.in));			
 		
 			System.out.println("Connecté au serveur " + s.getInetAddress() + ":"+ s.getPort());
-			
-			String line;
-		// menu et choix du service
-			line = sin.readLine();
-			System.out.println(line.replaceAll("##", "\n"));
-		// saisie/envoie du choix
-			sout.println(clavier.readLine());
-			
-		// r�ception/affichage de la question
-			System.out.println(sin.readLine());
-		// saisie clavier/envoie au service de la r�ponse
-			sout.println(clavier.readLine());
-		// r�ception/affichage de la r�ponse
-			System.out.println(sin.readLine());
+
+			while (true) {
+				String line;
+				// menu et choix du service
+				line = sin.readLine();
+				System.out.println(line.replaceAll("##", "\n"));
+				// saisie/envoie du choix
+				sout.println(clavier.readLine());
+			}
+
 				
 			
 		}

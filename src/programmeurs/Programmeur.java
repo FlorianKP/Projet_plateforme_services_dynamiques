@@ -14,9 +14,9 @@ public class Programmeur {
         this.adresseFtp = adresseFtp;
     }
 
-    public Programmeur(String mdp, String identifiant, String adresseFtp) {
-        this.mdp = mdp;
+    public Programmeur( String identifiant, String mdp, String adresseFtp) {
         this.identifiant = identifiant;
+        this.mdp = mdp;
         this.adresseFtp = adresseFtp;
     }
 

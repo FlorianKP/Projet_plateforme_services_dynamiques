@@ -72,7 +72,7 @@ public class ServiceRegistry {
 	}
 
 	private static boolean aAttributSocket(Class<? extends Service> serviceClasse){
-		Field[] fields = serviceClasse.getFields();
+		Field[] fields = serviceClasse.getDeclaredFields();
 		for(Field field : fields){
 			if(Modifier.isPrivate(field.getModifiers()) && Modifier.isFinal(field.getModifiers()) && field.getType().equals(java.net.Socket.class)){
 				return true;

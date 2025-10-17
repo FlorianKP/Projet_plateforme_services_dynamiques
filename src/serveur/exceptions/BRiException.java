@@ -1,4 +1,4 @@
-package exceptions;
+package serveur.exceptions;
 
 public class BRiException extends Exception {
     public BRiException(String s) {

@@ -1,12 +1,7 @@
-package bri;
+package serveur.bri;
 
-import exceptions.BRiException;
-import programmeurs.Programmeur;
+import serveur.exceptions.BRiException;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +41,7 @@ public class ServiceRegistry {
 	
 // liste les activit�s pr�sentes
 	public static String toStringue() {
-		String result = "Activit�s pr�sentes :##";
+		String result = "Activités présentes :##";
 		int i = 0;
 		for(Class<?> classe : servicesClasses) {
 			result+= ++i + " - " + classe.getSimpleName();

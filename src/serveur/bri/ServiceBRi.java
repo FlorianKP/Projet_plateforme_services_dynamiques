@@ -1,4 +1,4 @@
-package bri;
+package serveur.bri;
 
 
 import java.io.*;

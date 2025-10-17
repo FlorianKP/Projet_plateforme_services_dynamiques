@@ -1,6 +1,6 @@
-package bri;
+package serveur.bri;
 
-import exceptions.BRiException;
+import serveur.exceptions.BRiException;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -13,7 +13,7 @@ public class CertificationBRi {
             throw new BRiException("Le package de votre classe n'a pas le même nom que votre identifiant");
         }
         if(!implementeService(serviceClasse)){
-            throw new BRiException("La classe n'implémente pas l'interface bri.Service");
+            throw new BRiException("La classe n'implémente pas l'interface serveur.bri.Service");
         }
         if(Modifier.isAbstract(serviceClasse.getModifiers())){
             throw new BRiException("La classe ne peut pas être abstract");
@@ -75,7 +75,7 @@ public class CertificationBRi {
     private static boolean implementeService(Class<? extends Service> serviceClasse) {
         Class<?>[] interfaces = serviceClasse.getInterfaces();
         for (Class<?> anInterface : interfaces) {
-            if (anInterface.getName().equals("bri.Service")) {
+            if (anInterface.getName().equals("serveur.bri.Service")) {
                 return true;
             }
         }

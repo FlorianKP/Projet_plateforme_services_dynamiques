@@ -1,11 +1,9 @@
-package appli;
+package serveur.appli;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.util.Scanner;
-
-import bri.*;
+import serveur.bri.*;
+import serveur.bri.commandes.AjouterService;
+import serveur.bri.commandes.MettreAJourService;
+import serveur.bri.commandes.ModifierAddresseFTP;
 
 public class BRiLaunch {
 	private final static int PORT_PROG = 3000;
@@ -30,6 +28,10 @@ public class BRiLaunch {
 		System.out.println("Pour ajouter une activit�, celle-ci doit �tre pr�sente sur votre serveur ftp");
 		System.out.println("A tout instant, en tapant le nom de la classe, vous pouvez l'int�grer");
 		System.out.println("Les clients se connectent au serveur 3000 pour lancer une activit�");
+
+		CommandeRegistry commandes = initCommandes();
+
+		ServiceProg.setLesCommandes(commandes);
 		
 		new Thread(new ServeurBRi(PORT_PROG, ServiceProg.class)).start() ;
 		new Thread(new ServeurBRi(PORT_AMA, ServiceBRi.class)).start() ;
@@ -42,5 +44,15 @@ public class BRiLaunch {
 					System.out.println(e);
 				}
 			}		*/
+	}
+
+	public static CommandeRegistry initCommandes() {
+		CommandeRegistry commandeRegistry = new CommandeRegistry();
+
+		commandeRegistry.addCommande(new AjouterService());
+		commandeRegistry.addCommande(new MettreAJourService());
+		commandeRegistry.addCommande(new ModifierAddresseFTP());
+
+		return commandeRegistry;
 	}
 }

@@ -18,10 +18,10 @@ public class MettreAJourService implements Commande {
     @Override
     public String executer(BufferedReader in, PrintWriter out, Programmeur programmeur) throws IOException {
         out.println("Entrez le nom du service à modifier");
-        String nomClasseService = in.readLine();
+        String nomClasse = in.readLine();
         try {
-            ServiceRegistry.updateService(getURLClassLoader(programmeur).loadClass(nomClasseService).asSubclass(Service.class), programmeur.getIdentifiant());
-            return "Service modifié " + nomClasseService + "##";
+            ServiceRegistry.updateService(ServiceFtpLoader.loadServiceClass(nomClasse, programmeur), programmeur.getIdentifiant());
+            return "Service modifié " + nomClasse + "##";
         } catch (ClassNotFoundException e) {
             return "Le service demandé est introuvable sur votre serveur FTP##";
         } catch (MalformedURLException e) {
@@ -29,12 +29,6 @@ public class MettreAJourService implements Commande {
         } catch (BRiException e){
             return e.getMessage() + "##";
         }
-    }
-
-    public URLClassLoader getURLClassLoader(Programmeur programmeur) throws MalformedURLException {
-        URLClassLoader urlcl = null;
-        urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
-        return urlcl;
     }
 
     @Override

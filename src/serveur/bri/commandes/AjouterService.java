@@ -25,7 +25,7 @@ public class AjouterService implements Commande {
             return  "Nom de classe invalide##";
 
         try {
-            ServiceRegistry.addService(getURLClassLoader(programmeur).loadClass(nomClasse).asSubclass(Service.class), programmeur.getIdentifiant());
+            ServiceRegistry.addService(ServiceFtpLoader.loadServiceClass(nomClasse, programmeur), programmeur.getIdentifiant());
             return "Service ajouté " + nomClasse + "##";
         } catch (ClassNotFoundException e) {
             return "Le service demandé est introuvable sur votre serveur FTP##";
@@ -34,12 +34,6 @@ public class AjouterService implements Commande {
         } catch (BRiException e){
             return e.getMessage() + "##";
         }
-    }
-
-    public URLClassLoader getURLClassLoader(Programmeur programmeur) throws MalformedURLException {
-        URLClassLoader urlcl = null;
-        urlcl = URLClassLoader.newInstance(new URL[] {new URL(programmeur.getAdresseFtp())});
-        return urlcl;
     }
 
     @Override

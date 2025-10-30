@@ -1,9 +1,9 @@
-package serveur.appli;
+package appli;
 
-import serveur.bri.*;
-import serveur.bri.commandes.AjouterService;
-import serveur.bri.commandes.MettreAJourService;
-import serveur.bri.commandes.ModifierAddresseFTP;
+import bri.*;
+import bri.commandes.AjouterService;
+import bri.commandes.MettreAJourService;
+import bri.commandes.ModifierAddresseFTP;
 
 public class BRiLaunch {
 	private final static int PORT_PROG = 3000;

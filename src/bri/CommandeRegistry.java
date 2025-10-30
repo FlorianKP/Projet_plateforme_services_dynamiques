@@ -1,4 +1,4 @@
-package serveur.bri;
+package bri;
 
 import java.util.ArrayList;
 import java.util.List;

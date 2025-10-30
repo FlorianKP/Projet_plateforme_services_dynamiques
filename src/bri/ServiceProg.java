@@ -1,6 +1,6 @@
-package serveur.bri;
+package bri;
 
-import serveur.programmeurs.Programmeur;
+import programmeurs.Programmeur;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -71,6 +71,7 @@ public class ServiceProg implements Service {
             messageClient = "Numéro de commande invalide##";
         }
     }
+
 
     public Programmeur authentifierProgrammeur(BufferedReader in, PrintWriter out) {
         out.println(messageClient + "Entrez 1 pour vous inscrire ou 2 pour vous connecter :##" +

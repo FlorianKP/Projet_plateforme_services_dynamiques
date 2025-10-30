@@ -1,6 +1,6 @@
-package serveur.bri;
+package bri;
 
-import serveur.programmeurs.Programmeur;
+import programmeurs.Programmeur;
 
 import java.io.BufferedReader;
 import java.io.IOException;

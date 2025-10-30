@@ -1,4 +1,4 @@
-package serveur.programmeurs;
+package programmeurs;
 
 public class Programmeur {
 

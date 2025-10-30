@@ -1,7 +1,7 @@
-package serveur.bri.commandes;
+package bri.commandes;
 
-import serveur.bri.Commande;
-import serveur.programmeurs.Programmeur;
+import bri.Commande;
+import programmeurs.Programmeur;
 
 import java.io.BufferedReader;
 import java.io.IOException;

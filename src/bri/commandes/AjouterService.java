@@ -1,17 +1,14 @@
-package serveur.bri.commandes;
+package bri.commandes;
 
-import serveur.bri.Commande;
-import serveur.bri.Service;
-import serveur.bri.ServiceRegistry;
-import serveur.exceptions.BRiException;
-import serveur.programmeurs.Programmeur;
+import bri.Commande;
+import bri.ServiceRegistry;
+import exceptions.BRiException;
+import programmeurs.Programmeur;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
 
 
 public class AjouterService implements Commande {

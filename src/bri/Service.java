@@ -1,4 +1,4 @@
-package serveur.bri;
+package bri;
 
 // rien à ajouter ici
 

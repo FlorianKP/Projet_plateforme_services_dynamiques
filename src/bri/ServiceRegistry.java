@@ -1,6 +1,6 @@
-package serveur.bri;
+package bri;
 
-import serveur.exceptions.BRiException;
+import exceptions.BRiException;
 
 import java.util.ArrayList;
 import java.util.List;
